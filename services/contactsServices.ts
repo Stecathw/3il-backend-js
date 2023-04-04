@@ -1,4 +1,3 @@
-// const prisma = require( '../db/prisma');
 import {Contact, CreateContactInput} from '../types/contact';
 import { prismaRepository } from '../repository/prismaRepository';
 

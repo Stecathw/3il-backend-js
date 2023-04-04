@@ -1,26 +1,25 @@
-import { Router } from 'express';
-const contactsServices = require('../services/contactsServices')
+import { Router, Request, Response } from 'express';
+import { validateIdParam, validateBody } from '../middlewares/contactsMiddlewares';
+import contactsServices = require('../services/contactsServices')
 
 export const contacts = Router();
 
-// Define an API route to get all contacts
-contacts.get('/', async (req, res) => {
+// Define an API route to get all contacts and returns a table view.
+contacts.get('/', async (req : Request, res : Response) => {
   try {
     const contacts = await contactsServices.getAllContacts();
-    console.log(contacts)
     res.render('index', { contacts })
-    // res.status(200).json(contacts);
   } catch (error) {
     console.log(error);
     res.status(500).send('Error getting contacts');
   }
 });
 
-contacts.get('/all', async (req, res) => {
+// Define a route for getting all contacts
+contacts.get('/all', async (req : Request, res : Response) => {
   try {
     const contacts = await contactsServices.getAllContacts();
     console.log(contacts)
-    // res.render('index', { contacts })
     res.status(200).json(contacts);
   } catch (error) {
     console.log(error);
@@ -29,20 +28,13 @@ contacts.get('/all', async (req, res) => {
 });
 
 // Define a route for getting a contact by ID
-contacts.get('/:id', async (req, res) => {
+contacts.get('/:id', validateIdParam, async (req : Request, res : Response) => {
   try {
     const { id } = req.params;
-    // Controls
-
-    // Find the contact with the provided ID
     const contact = await contactsServices.getContactById(parseInt(id));
-
-    // If contact is not found, return a 404 error response
     if (!contact) {
       return res.status(404).send('Contact not found');
     }
-
-    // Return the contact as a JSON response
     res.json(contact);
   } catch (error) {
     console.error(error);
@@ -51,18 +43,14 @@ contacts.get('/:id', async (req, res) => {
 });
 
 // Define an API route for creating new contacts
-contacts.post('/', async (req, res) => {
+contacts.post('/', validateBody, async (req : Request, res : Response) => {
   try {
     const { firstname, lastname, genreId } = req.body;
-
-    // Create the new user in the database
     const newContact = await contactsServices.createContact({
       firstname,
       lastname,
       genreId,
     });
-
-    // Return the newly created contact
     res.status(201).json(newContact);
   } catch (error) {
     console.error(error);
@@ -70,7 +58,8 @@ contacts.post('/', async (req, res) => {
   }
 });
 
-contacts.put('/:id', async (req, res) => {
+// Define an API route to update a contact by ID
+contacts.put('/:id', validateIdParam, validateBody, async (req : Request, res : Response) => {
   try {
     const { firstname, lastname, genreId } = req.body;
     const contactId = parseInt(req.params.id);
@@ -81,8 +70,6 @@ contacts.put('/:id', async (req, res) => {
       lastname,
       genreId,
     });
-
-    // Return the updated contact
     res.status(200).json(updatedContact);
   } catch (error) {
     console.error(error);
@@ -90,14 +77,11 @@ contacts.put('/:id', async (req, res) => {
   }
 });
 
-contacts.delete('/:id', async (req, res) => {
+// Define an API route to delete a contact by ID
+contacts.delete('/:id', validateIdParam, async (req : Request, res : Response) => {
   try {
     const contactId = parseInt(req.params.id);
-
-    // Delete the contact from the database
     await contactsServices.deleteContact(contactId);
-
-    // Return a success message
     res.status(200).send(`Contact with ID ${contactId} deleted successfully`);
   } catch (error) {
     console.error(error);

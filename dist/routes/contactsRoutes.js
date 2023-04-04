@@ -11,15 +11,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.contacts = void 0;
 const express_1 = require("express");
-const contactsServices = require('../services/contactsServices');
+const contactsMiddlewares_1 = require("../middlewares/contactsMiddlewares");
+const contactsServices = require("../services/contactsServices");
 exports.contacts = (0, express_1.Router)();
 // Define an API route to get all contacts
 exports.contacts.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const contacts = yield contactsServices.getAllContacts();
-        console.log(contacts);
         res.render('index', { contacts });
-        // res.status(200).json(contacts);
     }
     catch (error) {
         console.log(error);
@@ -30,7 +29,6 @@ exports.contacts.get('/all', (req, res) => __awaiter(void 0, void 0, void 0, fun
     try {
         const contacts = yield contactsServices.getAllContacts();
         console.log(contacts);
-        // res.render('index', { contacts })
         res.status(200).json(contacts);
     }
     catch (error) {
@@ -39,11 +37,9 @@ exports.contacts.get('/all', (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 }));
 // Define a route for getting a contact by ID
-exports.contacts.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.contacts.get('/:id', contactsMiddlewares_1.validateIdParam, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        // Controls
-        // Find the contact with the provided ID
         const contact = yield contactsServices.getContactById(parseInt(id));
         // If contact is not found, return a 404 error response
         if (!contact) {
@@ -58,7 +54,7 @@ exports.contacts.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 }));
 // Define an API route for creating new contacts
-exports.contacts.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.contacts.post('/', contactsMiddlewares_1.validateBody, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { firstname, lastname, genreId } = req.body;
         // Create the new user in the database
@@ -75,7 +71,7 @@ exports.contacts.post('/', (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.status(500).send('Error creating new contact');
     }
 }));
-exports.contacts.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.contacts.put('/:id', contactsMiddlewares_1.validateIdParam, contactsMiddlewares_1.validateBody, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { firstname, lastname, genreId } = req.body;
         const contactId = parseInt(req.params.id);
@@ -93,7 +89,7 @@ exports.contacts.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, fun
         res.status(500).send('Error updating contact');
     }
 }));
-exports.contacts.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.contacts.delete('/:id', contactsMiddlewares_1.validateIdParam, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const contactId = parseInt(req.params.id);
         // Delete the contact from the database

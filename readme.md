@@ -22,6 +22,10 @@ npm install
 npm run dev
 `
 
+# Run test
+
+`npm run test`
+
 # ENDPOINTS :
 
 ### Tableau EJS :

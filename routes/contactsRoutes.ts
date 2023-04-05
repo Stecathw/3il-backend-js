@@ -19,7 +19,6 @@ contacts.get('/', async (req : Request, res : Response) => {
 contacts.get('/all', async (req : Request, res : Response) => {
   try {
     const contacts = await contactsServices.getAllContacts();
-    console.log(contacts)
     res.status(200).json(contacts);
   } catch (error) {
     console.log(error);
@@ -35,7 +34,7 @@ contacts.get('/:id', validateIdParam, async (req : Request, res : Response) => {
     if (!contact) {
       return res.status(404).send('Contact not found');
     }
-    res.json(contact);
+    res.status(200).json(contact);
   } catch (error) {
     console.error(error);
     res.status(500).send('Error getting contact');
@@ -63,8 +62,7 @@ contacts.put('/:id', validateIdParam, validateBody, async (req : Request, res : 
   try {
     const { firstname, lastname, genreId } = req.body;
     const contactId = parseInt(req.params.id);
-
-    // Update the contact in the database
+    
     const updatedContact = await contactsServices.updateContact(contactId, {
       firstname,
       lastname,

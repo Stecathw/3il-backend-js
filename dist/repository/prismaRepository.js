@@ -13,6 +13,46 @@ exports.prismaRepository = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 exports.prismaRepository = {
+    seed() {
+        return __awaiter(this, void 0, void 0, function* () {
+            // Create genres
+            const male = yield prisma.genre.create({
+                data: {
+                    id: 1,
+                    libelle: 'Male',
+                },
+            });
+            const female = yield prisma.genre.create({
+                data: {
+                    id: 2,
+                    libelle: 'Female',
+                },
+            });
+            const others = yield prisma.genre.create({
+                data: {
+                    id: 3,
+                    libelle: 'Others',
+                },
+            });
+            // Create users
+            yield prisma.user.createMany({
+                data: [
+                    {
+                        id: 1,
+                        firstname: 'John',
+                        lastname: 'Repool',
+                        genreId: male.id,
+                    },
+                    {
+                        id: 2,
+                        firstname: 'Jane',
+                        lastname: 'Doe',
+                        genreId: female.id,
+                    },
+                ],
+            });
+        });
+    },
     getAllContacts() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield prisma.user.findMany({
@@ -58,6 +98,13 @@ exports.prismaRepository = {
             return yield prisma.user.delete({
                 where: { id },
             });
+        });
+    },
+    clearDatabase() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield prisma.user.deleteMany();
+            yield prisma.genre.deleteMany();
+            yield prisma.$disconnect();
         });
     },
 };

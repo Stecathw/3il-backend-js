@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1680706016078" clover="3.2.0">
-  <project timestamp="1680706016078" name="All files">
-    <metrics statements="113" coveredstatements="91" conditionals="13" coveredconditionals="6" methods="34" coveredmethods="32" elements="160" coveredelements="129" complexity="0" loc="113" ncloc="113" packages="5" files="6" classes="6"/>
+<coverage generated="1680712921256" clover="3.2.0">
+  <project timestamp="1680712921256" name="All files">
+    <metrics statements="114" coveredstatements="92" conditionals="13" coveredconditionals="6" methods="34" coveredmethods="32" elements="161" coveredelements="130" complexity="0" loc="114" ncloc="114" packages="5" files="6" classes="6"/>
     <package name="contact2">
-      <metrics statements="19" coveredstatements="17" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="3"/>
+      <metrics statements="20" coveredstatements="18" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="3"/>
       <file name="app.ts" path="C:\Users\willi\Documents\dev\sandbox\backend-js\contact2\app.ts">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
@@ -17,17 +17,18 @@
         <line num="15" count="1" type="stmt"/>
       </file>
       <file name="server.ts" path="C:\Users\willi\Documents\dev\sandbox\backend-js\contact2\server.ts">
-        <metrics statements="10" coveredstatements="8" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <metrics statements="11" coveredstatements="9" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="cond" truecount="0" falsecount="1"/>
         <line num="5" count="0" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
-        <line num="8" count="1" type="cond" truecount="0" falsecount="1"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="10" count="0" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
       </file>
     </package>
     <package name="contact2.middlewares">

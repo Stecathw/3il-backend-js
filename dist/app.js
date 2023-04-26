@@ -14,9 +14,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 const express_1 = __importDefault(require("express"));
+var cors = require('cors');
 const contactsRoutes_1 = require("./routes/contactsRoutes");
 const app = (0, express_1.default)();
 exports.app = app;
+const corsOptions = {
+    origin: 'http://localhost:4200',
+    methods: 'GET, POST, PUT, DELETE',
+    optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 app.use(express_1.default.json());
 app.set('view engine', 'ejs');
 app.use('/api/contacts', contactsRoutes_1.contacts);

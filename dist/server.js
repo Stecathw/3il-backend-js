@@ -11,6 +11,6 @@ if (isNaN(port)) {
     throw new Error('PORT must be a valid number');
 }
 const server = app_1.app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+    console.log(`CORS-enabled. Listening on port ${port}`);
 });
 exports.server = server;
